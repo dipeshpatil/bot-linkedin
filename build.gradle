@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'io.github.dipeshpatil'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    // Selenium Java
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+    // Dotenv
+    implementation 'io.github.cdimascio:dotenv-java:2.2.0'
+
+    // Pretty Table
+    implementation 'com.github.skebir:prettytable:v1.0'
+}
+
+test {
+    useJUnitPlatform()
+}
