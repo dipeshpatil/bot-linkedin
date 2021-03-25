@@ -1,0 +1,7 @@
+People -> [Recruiter] -> [Google, Microsoft] -> [Bangalore, Pune]
+People -> [Software Engineer] -> [Google] -> [Bangalore]
+People -> [Software Engineer, SDE] -> [Microsoft] -> [Bangalore]
+People -> [SDET] -> [BrowserStack] -> [Mumbai]
+People -> [SDET] -> [Dream11] -> [Mumbai]
+People -> [Software Engineer] -> [Amazon] -> [Bangalore]
+People -> [Recruiter] -> [Amazon] -> [Bangalore]
