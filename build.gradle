@@ -22,6 +22,9 @@ dependencies {
 
     // Pretty Table
     implementation 'com.github.skebir:prettytable:v1.0'
+
+    // POI Api for Excel
+    implementation 'org.apache.poi:poi-ooxml:3.17'
 }
 
 test {

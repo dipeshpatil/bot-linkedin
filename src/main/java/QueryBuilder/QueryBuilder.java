@@ -7,12 +7,21 @@ import java.util.HashMap;
 public class QueryBuilder extends QueryConstants {
     private String query;
 
+    private String[] keywords;
+    private String[] company;
+    private String[] location;
+
     public QueryBuilder(String query) {
         this.query = query;
     }
 
     public String generateUrl() {
         String[][] params = buildParams();
+
+        this.keywords = params[1];
+        this.company = params[2];
+        this.location = params[3];
+
         String MAIN_URL = "https://www.linkedin.com/search/results/";
 
         MAIN_URL += params[0][0].toLowerCase() + "/";
@@ -64,5 +73,38 @@ public class QueryBuilder extends QueryConstants {
         }
 
         return intermediateURL.append("]").toString();
+    }
+
+    public String getParamsSlug() {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < company.length; i++) {
+            if (company.length > 1) {
+                builder.append(company[i]).append("_");
+                if (i == company.length - 1)
+                    builder.append(company[i]);
+            } else
+                builder.append(company[i]).append("_");
+        }
+
+        for (int i = 0; i < keywords.length; i++) {
+            if (keywords.length > 1) {
+                builder.append(keywords[i]).append("_");
+                if (i == keywords.length - 1)
+                    builder.append(keywords[i]);
+            } else
+                builder.append(keywords[i]).append("_");
+        }
+
+        for (int i = 0; i < location.length; i++) {
+            if (location.length > 1) {
+                builder.append(location[i]).append("_");
+                if (i == location.length - 1)
+                    builder.append(location[i]);
+            } else
+                builder.append(location[i]).append("_");
+        }
+
+        return builder.toString();
     }
 }

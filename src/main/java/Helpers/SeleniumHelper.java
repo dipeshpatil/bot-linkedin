@@ -36,7 +36,6 @@ public class SeleniumHelper {
     }
 
     public synchronized void waitFor(int seconds) {
-        System.out.printf("Wait for '%d' seconds%n", seconds);
         try {
             Thread.sleep(seconds * 1000L);
         } catch (InterruptedException ignored) {
