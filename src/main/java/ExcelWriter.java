@@ -4,6 +4,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -54,7 +56,11 @@ public class ExcelWriter {
         for (int i = 0; i < columns.length; i++)
             sheet.autoSizeColumn(i);
 
-        FileOutputStream fileOut = new FileOutputStream(sheetName + new Random().nextInt(500) + ".xlsx");
+        LocalDateTime localDate = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
+        String formattedDate = localDate.format(dateTimeFormatter);
+
+        FileOutputStream fileOut = new FileOutputStream(sheetName + formattedDate + ".xlsx");
         workbook.write(fileOut);
         fileOut.close();
 

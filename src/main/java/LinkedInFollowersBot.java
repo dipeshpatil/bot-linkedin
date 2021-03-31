@@ -79,7 +79,7 @@ public class LinkedInFollowersBot extends Config {
 
         PrettyTable table = new PrettyTable("ID", "Name", "Bio", "Location", "Status");
         int count = 1;
-        displayUsers(URL, 1, totalPages, table, peopleList, count);
+        displayUsers(URL, 1, 1, followersCount, table, peopleList);
         System.out.println(table);
         lHelper.logOutFromLinkedIn();
 
@@ -87,12 +87,11 @@ public class LinkedInFollowersBot extends Config {
         writer.generateExcelSheet();
     }
 
-    private static void displayUsers(String URL, int currentPage, int totalPages, PrettyTable table, List<People> peopleList, int currentCount) {
+    private static void displayUsers(String URL, int currentPage, int currentFollower, int totalFollowers, PrettyTable table, List<People> peopleList) {
         sHelper.navigateTo(nextPage(URL, currentPage));
         sHelper.waitFor(3);
 
-        int count = 1;
-        List<WebElement> elements = sHelper.waitUntilAllElementsLocatedOf(byResultsCssSelector);
+        List<WebElement> elements = driver.findElements(byResultsCssSelector);
         if (elements.size() > 0) {
             for (WebElement node : elements) {
                 if (sHelper.isElementPresent(node, byFollowersNameXPath)) {
@@ -107,17 +106,21 @@ public class LinkedInFollowersBot extends Config {
                     String actionButtonText = button.getAttribute("textContent").strip();
 
                     if (!actionButtonText.equals(MESSAGE)) {
-                        table.addRow(currentCount + "", nameText, trimString(bioText, 50), locationText, getButtonStatus(actionButtonText));
+                        table.addRow(currentFollower + "", nameText, trimString(bioText, 50), locationText, getButtonStatus(actionButtonText));
                     }
 
-                    peopleList.add(new People(currentCount++ + "", nameText, bioText, locationText));
+                    peopleList.add(new People(currentFollower + "", nameText, bioText, locationText));
                     handleActionButton(button, actionButtonText, false);
+
+                    currentFollower++;
+                    totalFollowers--;
                 }
             }
+        } else
+            return;
 
-            if (currentPage < totalPages)
-                displayUsers(URL, ++currentPage, totalPages, table, peopleList, currentCount);
-        }
+        if (totalFollowers > 0)
+            displayUsers(URL, ++currentPage, currentFollower, totalFollowers, table, peopleList);
     }
 
     private static String nextPage(String URL, int pageNumber) {
