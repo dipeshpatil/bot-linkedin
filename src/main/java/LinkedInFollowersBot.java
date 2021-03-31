@@ -59,7 +59,7 @@ public class LinkedInFollowersBot extends Config {
         sHelper = new SeleniumHelper(driver);
 
         lHelper.logInToLinkedIn();
-//        lHelper.disableMessagesDropdown();
+        lHelper.disableMessagesDropdown();
 
         System.out.println("Enter Query: ");
         Scanner scanner = new Scanner(System.in);
@@ -75,10 +75,9 @@ public class LinkedInFollowersBot extends Config {
 
         System.out.println("Enter Followers Count: ");
         int followersCount = Integer.parseInt(scanner.nextLine());
-        int totalPages = followersCount / 10;
 
         PrettyTable table = new PrettyTable("ID", "Name", "Bio", "Location", "Status");
-        int count = 1;
+
         displayUsers(URL, 1, 1, followersCount, table, peopleList);
         System.out.println(table);
         lHelper.logOutFromLinkedIn();
