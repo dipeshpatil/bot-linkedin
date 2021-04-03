@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class QueryBuilder extends QueryConstants {
-    private String query;
+    private final String query;
 
     private String[] keywords;
     private String[] company;
@@ -25,9 +25,9 @@ public class QueryBuilder extends QueryConstants {
         String MAIN_URL = "https://www.linkedin.com/search/results/";
 
         MAIN_URL += params[0][0].toLowerCase() + "/";
-        MAIN_URL += "?currentCompany=" + URLEncoder.encode(transformValues(params[2], COMPANIES), StandardCharsets.UTF_8);
-        MAIN_URL += "&geoUrn=" + URLEncoder.encode(transformValues(params[3], LOCATION), StandardCharsets.UTF_8);
-        MAIN_URL += "&keywords=" + URLEncoder.encode(addKeywords(params[1]), StandardCharsets.UTF_8);
+        MAIN_URL += "?keywords=" + URLEncoder.encode(addKeywords(params[1]), StandardCharsets.UTF_8);
+        MAIN_URL += !params[2][0].equals("") ? "&currentCompany=" + URLEncoder.encode(transformValues(params[2], COMPANIES), StandardCharsets.UTF_8) : "";
+        MAIN_URL += !params[3][0].equals("") ? "&geoUrn=" + URLEncoder.encode(transformValues(params[3], LOCATION), StandardCharsets.UTF_8) : "";
 
         return MAIN_URL;
     }
@@ -61,18 +61,19 @@ public class QueryBuilder extends QueryConstants {
     }
 
     private String transformValues(String[] values, HashMap<String, String> MAP) {
-        StringBuilder intermediateURL = new StringBuilder("[");
-
-        for (int i = 0; i < values.length; i++) {
-            intermediateURL
-                    .append("\"")
-                    .append(MAP.get(values[i]))
-                    .append("\"");
-            if (i != values.length - 1)
-                intermediateURL.append(",");
+        if (!values[0].equals("")) {
+            StringBuilder intermediateURL = new StringBuilder("[");
+            for (int i = 0; i < values.length; i++) {
+                intermediateURL
+                        .append("\"")
+                        .append(MAP.get(values[i]))
+                        .append("\"");
+                if (i != values.length - 1)
+                    intermediateURL.append(",");
+            }
+            return intermediateURL.append("]").toString();
         }
-
-        return intermediateURL.append("]").toString();
+        return "";
     }
 
     public String getParamsSlug() {

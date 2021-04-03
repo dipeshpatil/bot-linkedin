@@ -3,6 +3,7 @@ import DataModel.People;
 import Helpers.LinkedInHelper;
 import Helpers.SeleniumHelper;
 import QueryBuilder.QueryBuilder;
+import Writer.ExcelWriter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -104,9 +105,8 @@ public class LinkedInFollowersBot extends Config {
                     String locationText = location.getAttribute("textContent").strip();
                     String actionButtonText = button.getAttribute("textContent").strip();
 
-                    if (!actionButtonText.equals(MESSAGE)) {
+                    if (!actionButtonText.equals(MESSAGE))
                         table.addRow(currentFollower + "", nameText, trimString(bioText, 50), locationText, getButtonStatus(actionButtonText));
-                    }
 
                     peopleList.add(new People(currentFollower + "", nameText, bioText, locationText));
                     handleActionButton(button, actionButtonText, false);
