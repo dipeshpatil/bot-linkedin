@@ -61,7 +61,7 @@ public class ExcelWriter {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
         String formattedDate = localDate.format(dateTimeFormatter);
 
-        FileOutputStream fileOut = new FileOutputStream(sheetName + formattedDate + ".xlsx");
+        FileOutputStream fileOut = new FileOutputStream("src/Saved_Results/" + sheetName + formattedDate + ".xlsx");
         workbook.write(fileOut);
         fileOut.close();
 

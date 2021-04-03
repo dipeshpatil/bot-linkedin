@@ -105,11 +105,11 @@ public class LinkedInFollowersBot extends Config {
                     String locationText = location.getAttribute("textContent").strip();
                     String actionButtonText = button.getAttribute("textContent").strip();
 
-                    if (!actionButtonText.equals(MESSAGE))
+                    if (!actionButtonText.equals(MESSAGE) && totalFollowers > 0) {
                         table.addRow(currentFollower + "", nameText, trimString(bioText, 50), locationText, getButtonStatus(actionButtonText));
-
-                    peopleList.add(new People(currentFollower + "", nameText, bioText, locationText));
-                    handleActionButton(button, actionButtonText, false);
+                        peopleList.add(new People(currentFollower + "", nameText, bioText, locationText));
+                        handleActionButton(button, actionButtonText, true);
+                    }
 
                     currentFollower++;
                     totalFollowers--;
