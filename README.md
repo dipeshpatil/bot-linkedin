@@ -75,8 +75,6 @@ Then input the number of followers
 Example
 ```30```
 
-`Note: Provide a round figure for best results!`
-
 Sit Back And Relax!
 
 ## Libraries / Tools Used
