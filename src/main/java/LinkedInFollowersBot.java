@@ -18,6 +18,9 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class LinkedInFollowersBot extends Config {
+    private static final boolean HIDE_BROWSER = false;
+    private static final boolean SEND_CONNECTION_REQUEST = false;
+
     private static WebDriver driver = null;
 
     private static String[] PEOPLE_COLUMNS = {"ID", "Name", "Bio", "Location"};
@@ -49,7 +52,8 @@ public class LinkedInFollowersBot extends Config {
         System.setProperty(DRIVER_TYPE, Config.DRIVER_PATH);
 
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");
+        if (HIDE_BROWSER)
+            options.addArguments("--headless");
 
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -108,7 +112,7 @@ public class LinkedInFollowersBot extends Config {
                     if (!actionButtonText.equals(MESSAGE) && totalFollowers > 0) {
                         table.addRow(currentFollower + "", nameText, trimString(bioText, 50), locationText, getButtonStatus(actionButtonText));
                         peopleList.add(new People(currentFollower + "", nameText, bioText, locationText));
-                        handleActionButton(button, actionButtonText, true);
+                        handleActionButton(button, actionButtonText, SEND_CONNECTION_REQUEST);
                     }
 
                     currentFollower++;
